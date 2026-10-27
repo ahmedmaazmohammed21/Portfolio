@@ -1,139 +1,334 @@
-# Maaz Ahmed — Portfolio
 
-A responsive personal portfolio built with Next.js App Router, React, TypeScript and Tailwind CSS. The repository also demonstrates containerized delivery and continuous integration.
+# Maaz Ahmed | Developer Portfolio
 
-> **Content integrity:** project descriptions and experience entries are intentionally cautious. Verify exact dates, certificate names, implementation details and repository URLs before treating them as final. Certificates are not published until verified.
+> A personal portfolio to showcase projects, technical skills, learning milestones, and continuous development as a software engineer.
 
-## Features
+This repository contains the source code for my developer portfolio, built with modern web technologies. The project is designed to present my work professionally while providing a structured way to document completed projects, track learning progress, and share selected updates.
 
-- Responsive homepage and project directory with search/category filtering
-- Individual project pages and status labels
-- Light/dark theme preference
-- About, skills, experience, education, certificates and contact pages
-- Contact form that prepares an email in the visitor's default email app; no server stores messages
-- Metadata, sitemap and robots rules
-- Docker multi-stage production image and Docker Compose
-- GitHub Actions CI and Dependabot updates
-- Accessibility focus styles and reduced-motion support
+I am continuously improving this portfolio as I learn, build, test, and deploy new projects.
 
-## Requirements
+---
 
-- Node.js 22 LTS (or a supported compatible Node.js version)
-- npm
-- Docker Desktop / Docker Engine for container workflows
+## Table of Contents
 
-## Local development
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Configuration](#environment-configuration)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [Deployment](#deployment)
+- [Security](#security)
+- [Development Roadmap](#development-roadmap)
+- [Contributing](#contributing)
+- [Author](#author)
+- [License](#license)
+
+---
+
+## Overview
+
+This project is more than a traditional portfolio website. Its goal is to create a central place to present my development journey, technical capabilities, projects, and professional growth.
+
+The portfolio is designed around two experiences:
+
+**Public Portfolio**
+- Professional introduction and developer profile.
+- Project showcase and technology details.
+- Technical skills and learning milestones.
+- Selected progress updates and development history.
+- Responsive interface for desktop, tablet, and mobile devices.
+
+**Private Administration Dashboard**
+- Manage portfolio content and project information.
+- Organize tasks and monthly progress notes.
+- Track skills, learning milestones, and development goals.
+- Control which progress updates are intended for public display.
+- Maintain a more organized workflow for updating the portfolio.
+
+Some features may require additional configuration before they can be used. Refer to the setup instructions and verify each feature in your local environment.
+
+---
+
+## Key Features
+
+### 1. Project Showcase
+Present projects with descriptions, technologies, objectives, and relevant links. The goal is to demonstrate practical implementation rather than simply list technologies.
+
+### 2. Development Progress
+Organize development activity into monthly records, completed tasks, ongoing work, and future goals.
+
+### 3. Skills and Learning
+Document technical skills and learning milestones as they develop through practical projects and coursework.
+
+### 4. Administration Dashboard
+A dedicated administration interface is included in the project source. Its authentication, content-management functionality, and persistence should be configured and tested before public deployment.
+
+### 5. Public Progress Updates
+The intended design allows selected progress updates to appear on the public portfolio while keeping private administrative information separate.
+
+### 6. Responsive Design
+The interface is intended to support different screen sizes, including desktop, tablet, and mobile.
+
+### 7. Deployment and Automation
+The repository can be maintained with Git and GitHub. Docker, CI workflows, and hosting configuration should be verified against the actual project files before relying on them.
+
+---
+
+## Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js | Application framework |
+| React | User interface |
+| TypeScript | Type-safe application development |
+| Tailwind CSS | Styling and responsive layouts |
+| Supabase | Intended database and persistence integration, where configured |
+| Git and GitHub | Version control and source management |
+| Vercel | Potential deployment platform |
+| Docker | Optional containerized development and deployment |
+
+The technologies listed above describe the intended stack. Confirm the installed dependencies and configured integrations in `package.json` and the project source before treating every integration as active.
+
+---
+
+## Project Structure
+
+The main application is organized into separate areas for pages, components, API routes, shared utilities, and database configuration.
+
+```text
+maaz-portfolio/
+├── app/
+│   ├── admin/
+│   │   └── page.tsx
+│   ├── api/
+│   │   └── admin/
+│   │       └── login/
+│   │           └── route.ts
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── AdminDashboard.tsx
+│   └── PublicPortfolioUpdates.tsx
+├── lib/
+│   ├── admin-auth.ts
+│   └── store.ts
+├── supabase/
+│   └── schema.sql
+├── public/
+├── .github/
+├── .gitignore
+├── package.json
+├── README.md
+└── ...
+```
+
+This is a representative structure. Some directories and files may differ depending on the current version of the repository.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Install the following tools before starting:
+
+- Node.js (use a version supported by the project's Next.js dependencies).
+- npm, which is included with Node.js.
+- Git.
+- Visual Studio Code or another code editor.
+
+### Step 1: Clone the Repository
+
+Replace the repository URL below with your actual GitHub repository URL.
 
 ```bash
-cp .env.example .env.local
-npm ci
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+cd YOUR_REPOSITORY
+```
+
+### Step 2: Install Dependencies
+
+```bash
+npm install
+```
+
+### Step 3: Configure Environment Variables
+
+Review the environment variables required by the source code and create a local `.env.local` file.
+
+Do not copy real credentials into this README or commit them to GitHub.
+
+### Step 4: Start the Development Server
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000. On Windows, create `.env.local` by copying `.env.example` in File Explorer or PowerShell if `cp` is unavailable.
+Open the local address shown in your terminal, normally:
 
-## Quality checks
+http://localhost:3000
+
+### Step 5: Check the Production Build
+
+Before deployment, run:
 
 ```bash
-npm run lint
-npm run typecheck
 npm run build
-npm start
 ```
 
-Run Lighthouse in Chrome DevTools against the production server at `http://localhost:3000`. Audit representative routes such as `/`, `/projects`, `/projects/healthpulse` and `/contact`. Record the device profile, Lighthouse version and scores when reporting results; scores vary by environment.
+If the build fails, resolve the reported dependency, configuration, or TypeScript errors before publishing a production deployment.
 
-## Docker
+---
 
-Build and start the production container:
+## Environment Configuration
 
-```bash
-docker compose up --build -d
+The application may require environment variables for administration authentication and external services.
+
+For example, the administration login implementation uses the following server-side configuration names:
+
+```env
+ADMIN_PASSWORD=replace_with_a_strong_password
+ADMIN_SESSION_SECRET=replace_with_a_long_random_secret
 ```
 
-Visit http://localhost:3000. Inspect logs and stop the service with:
+These are examples of the configuration format, not real credentials.
 
-```bash
-docker compose logs -f portfolio
-docker compose down
+If Supabase is configured, identify the exact environment variable names expected by the current database implementation and add the corresponding values locally.
+
+Important:
+- Never commit `.env.local`.
+- Never expose a database service-role key in client-side code.
+- Use strong, unique secrets.
+- Configure production environment variables through your hosting provider.
+- Do not assume that setting environment variables alone completes database or authentication setup.
+
+---
+
+## Database Setup
+
+A database schema is included under:
+
+```text
+supabase/schema.sql
 ```
 
-The image uses Next.js standalone output and runs as a non-root user. The Compose setup does not include a database because the current version uses version-controlled content and has no database-backed admin dashboard.
+If the application uses Supabase for persistent storage:
 
-## GitHub Actions and Dependabot
+1. Create or select a Supabase project.
+2. Review the provided SQL schema.
+3. Apply the schema using the appropriate Supabase database interface.
+4. Configure the required environment variables.
+5. Verify that application reads and writes use the intended database.
+6. Test access controls and confirm that private information cannot be read or changed by unauthorized users.
 
-`.github/workflows/ci.yml` runs on pushes and pull requests targeting `main`. It installs locked dependencies, runs lint/type checks, builds the app and validates the Docker image. `.github/dependabot.yml` checks npm and GitHub Actions dependencies on a schedule. Review update pull requests before merging them.
+A schema file alone does not prove that persistent storage is fully connected. Verify the implementation before relying on it.
 
-## Vercel deployment
+---
 
-1. Push this repository to GitHub.
-2. Import the repository in Vercel and keep the detected Next.js framework settings.
-3. Set `NEXT_PUBLIC_SITE_URL` to the actual deployed URL (for example, the Vercel project URL).
-4. Deploy and verify the home, project, contact, sitemap and robots routes.
-5. Use Vercel's Git integration for preview and production deployments. Production should follow reviewed changes merged to `main`.
+## Running the Application
 
-Docker is provided for reproducible local/portable container deployment; Vercel's native Next.js build is the recommended primary hosting path.
+Use the following commands during development.
 
-## Architecture
+| Command | Purpose |
+|---|---|
+| `npm install` | Install dependencies |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Start the production server after a successful build |
+| `npm run lint` | Run lint checks if the script is configured |
 
-```mermaid
-flowchart TD
-  Visitor[Visitor browser] --> App[Next.js portfolio]
-  App --> Content[Typed local content]
-  Dev[Developer] --> Git[Git and GitHub]
-  Git --> CI[GitHub Actions CI]
-  CI --> Checks[Lint, typecheck, build, Docker build]
-  Git --> Vercel[Vercel preview / production deployment]
-  Dependabot[Dependabot] --> PR[Dependency update pull request]
-  PR --> CI
-  CI --> Lighthouse[Lighthouse manual audit / future CI extension]
-```
+The available commands depend on the scripts defined in `package.json`.
 
-## Security notes
+---
 
-- Do not commit `.env.local`, API keys, tokens or credentials.
-- `.env.example` contains placeholders only.
-- CI uses read-only repository permissions.
-- The current contact form uses a `mailto:` flow; it does not submit personal data to a server.
-- There is no admin dashboard or authentication in this release. Do not imply otherwise.
-- Before adding server-side email, analytics, uploads or a database, add server-side validation, rate limiting, access policies and secret management.
+## Deployment
 
-## Known limitations / roadmap
+The portfolio can be prepared for deployment on a platform that supports Next.js, such as Vercel.
 
-- Add verified certificate records and credential URLs.
-- Replace provisional project wording with verified implementation details, screenshots and repository/demo links.
-- Consider a server-backed contact provider if needed, with spam protection and rate limiting.
-- Add automated browser tests and Lighthouse CI once the basic build has been verified in the target environment.
-- Add a private admin dashboard only alongside secure authentication and authorization.
+### Recommended deployment checklist
+
+- [ ] Install dependencies successfully.
+- [ ] Verify that the production build passes.
+- [ ] Configure environment variables securely.
+- [ ] Configure and test database connectivity if required.
+- [ ] Test administration authentication.
+- [ ] Confirm that private dashboard data is not publicly accessible.
+- [ ] Test the website on mobile and desktop.
+- [ ] Verify all navigation links and project URLs.
+- [ ] Deploy and test the production website.
+
+A successful deployment should be reported only after the deployed application has been checked.
+
+---
+
+## Security
+
+Security is especially important when a portfolio includes a private administration dashboard.
+
+Recommended practices:
+
+- Keep credentials and secrets out of source control.
+- Enforce authentication on protected server-side routes.
+- Protect administrative operations, not just the dashboard interface.
+- Validate and sanitize submitted data.
+- Restrict database permissions according to the application's needs.
+- Avoid exposing private notes, credentials, or unpublished content through public APIs.
+- Use HTTPS in production.
+- Test session handling, unauthorized access, and error responses before deployment.
+
+These are security requirements and recommendations; they should not be interpreted as proof that every item has already been implemented.
+
+---
+
+## Development Roadmap
+
+The portfolio will continue to evolve as new projects and improvements are completed.
+
+- [ ] Verify and refine the complete portfolio experience.
+- [ ] Add screenshots and a live demonstration link.
+- [ ] Verify administration login and session security.
+- [ ] Complete and test persistent content storage.
+- [ ] Improve project filtering and technology categorization.
+- [ ] Add completed projects with meaningful documentation.
+- [ ] Maintain a monthly development and learning history.
+- [ ] Publish selected progress updates.
+- [ ] Verify mobile responsiveness and accessibility.
+- [ ] Validate automated checks and deployment workflows.
+
+Update this checklist as work is completed. Do not mark features complete until they have been implemented and tested.
+
+---
+
+## Contributing
+
+This repository primarily documents my personal development work.
+
+If you find an issue or have a useful suggestion, feel free to open an issue or submit a pull request.
+
+Please avoid including credentials, personal information, or other sensitive data in issues and contributions.
+
+---
+
+## Author
+
+**Maaz Ahmed**
+
+Computer Science and Engineering student interested in software development, Artificial Intelligence, Machine Learning, Data Analytics, and cybersecurity.
+
+- GitHub: [@ahmedmaazmohammed21](https://github.com/ahmedmaazmohammed21)
+- LinkedIn: [Maaz Ahmed](https://www.linkedin.com/in/maaz-ahmed-680122364/)
+
+I believe in learning by building, improving through feedback, and documenting progress through practical work.
+
+---
 
 ## License
 
-No license has been selected yet. Add a license only after deciding how you want others to reuse the source.
+No license has been specified yet.
 
-## Private portfolio dashboard (added)
+If you want others to reuse, modify, or distribute this project's source code, choose an appropriate open-source license and add a `LICENSE` file to the repository.
 
-The private dashboard is available at `/admin`. It supports project records, progress updates, tasks/roadmap items, skills, learning milestones, deployment notes, and importing recent public GitHub events as draft progress entries. Entries are private by default; check **Publish publicly** only for work you want visitors to see. Publicly published projects appear in the Projects page's additional-projects section, while published updates, milestones and deployment notes appear in the homepage build log.
-
-### Configure persistent storage and admin access
-
-1. Create a Supabase project.
-2. In Supabase **SQL Editor**, run `supabase/schema.sql`.
-3. Copy `.env.example` to `.env.local` and set:
-   - `ADMIN_PASSWORD`: a unique, long password used only for this dashboard.
-   - `ADMIN_SESSION_SECRET`: a random secret of at least 32 characters.
-   - `SUPABASE_URL`: the Supabase project URL.
-   - `SUPABASE_SERVICE_ROLE_KEY`: the server-side service-role key from Supabase project API settings. **Never use a `NEXT_PUBLIC_` prefix for this key and never commit it.**
-   - `GITHUB_USERNAME`: your GitHub username (defaults to `ahmedmaazmohammed21` in the route if omitted).
-4. Start locally with `npm ci` then `npm run dev`; open `http://localhost:3000/admin`.
-5. Add an entry, keep it private, and save. Publish it only after checking the content and links.
-6. Set the same environment variables in Vercel **Project → Settings → Environment Variables** for Preview/Production as appropriate, then redeploy after changes.
-
-The database is accessed only from server-side route handlers using the Supabase service-role key. The browser never receives that key. Admin authentication uses an HTTP-only, SameSite=Strict cookie signed with `ADMIN_SESSION_SECRET`; the admin route is excluded from search indexing. Keep the password and secret private, use HTTPS in production, and rotate them if exposed.
-
-### Data behavior and limits
-
-- Manual entries are persisted in Supabase and public pages fetch published entries on the server, so publishing does not require editing/redeploying the code.
-- GitHub import reads recent **public** GitHub events. It does not monitor private repositories, guarantee a complete commit history, or automatically publish events. Select an event to turn it into a draft and review it before publishing.
-- Tasks and skills are private unless explicitly published; only project/update/milestone/deployment records are shown publicly.
-- Existing hand-authored portfolio content remains in `content/data.ts`; new dashboard projects are added alongside it. The dashboard does not rewrite existing static project records.
-- If Supabase is not configured, the public site continues to render its static content; the admin dashboard reports a configuration error when you try to save records.
+Until then, do not assume that the repository is released under an open-source license.
